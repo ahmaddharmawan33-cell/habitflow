@@ -53,7 +53,7 @@ export default function Login({ onGuest }) {
                 <h1 style={{ fontSize: 32, fontWeight: 800, marginBottom: 12, letterSpacing: "-0.5px" }}>HabitFlow</h1>
                 <p style={{ color: "var(--text2)", marginBottom: 40, fontSize: 15, lineHeight: 1.6 }}>
                     Bangun disiplin dalam keindahan. <br />
-                    Satu langkah kecil untuk perubahan besar.
+                    Mulai perjalananmu hanya dengan satu klik.
                 </p>
 
                 {error && (
@@ -87,10 +87,11 @@ export default function Login({ onGuest }) {
                             background: "white",
                             color: "#000",
                             border: "none",
-                            transition: "transform 0.2s"
+                            transition: "transform 0.2s",
+                            cursor: "pointer"
                         }}>
                         <img src="https://www.gstatic.com/images/branding/product/1x/gsa_512dp.png" alt="" width="20" height="20" />
-                        {loading ? "Menghubungkan..." : "Lanjutkan dengan Google"}
+                        {loading ? "Menghubungkan..." : "Masuk dengan Google"}
                     </button>
 
                     <button className="btn-secondary-glass"
@@ -107,12 +108,12 @@ export default function Login({ onGuest }) {
                             cursor: "pointer",
                             transition: "all 0.2s"
                         }}>
-                        Coba sebagai Tamu (Offline)
+                        Coba Dulu (Offline Mode)
                     </button>
                 </div>
 
                 <p style={{ marginTop: 32, fontSize: 12, color: "var(--text2)", opacity: 0.7 }}>
-                    By continuing, you agree to our Terms and Privacy Policy.
+                    Dengan melanjutkan, kamu setuju dengan Ketentuan Layanan kami.
                 </p>
             </div>
 

@@ -1902,3 +1902,128 @@ body {
   transform: scale(1.2);
   opacity: 1 !important;
 }
+/* MOBILE RESPONSIVENESS */
+@media (max-width: 768px) {
+  .app {
+    position: relative;
+  }
+
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 280px;
+    z-index: 2000;
+    transform: translateX(-100%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 20px 0 50px rgba(0, 0, 0, 0.5);
+  }
+
+  .sidebar.mobile-open {
+    transform: translateX(0);
+  }
+
+  .sidebar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    z-index: 1999;
+    animation: fadeIn 0.3s ease;
+  }
+
+  .main-inner {
+    padding: 20px 16px;
+  }
+
+  .topbar {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 24px;
+    width: 100%;
+  }
+
+  .topbar-left {
+    width: 100%;
+  }
+
+  .topbar-right {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .mobile-toggle {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-size: 20px;
+    cursor: pointer;
+  }
+
+  .week-strip {
+    display: flex !important;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+    margin: 0 -16px 16px;
+    padding: 0 16px 8px;
+  }
+
+  .week-day {
+    min-width: 60px;
+  }
+
+  .week-strip::-webkit-scrollbar {
+    display: none;
+  }
+
+  .habit-item {
+    padding: 12px;
+  }
+
+  .habit-meta {
+    gap: 4px;
+  }
+
+  .habit-actions {
+    margin-top: 10px;
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  .celebration-card {
+    width: 90%;
+    padding: 30px 20px;
+  }
+
+  .modal {
+    padding: 20px;
+    max-height: 90vh;
+    overflow-y: auto;
+    width: 95%;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.mobile-toggle {
+  display: none;
+}
+

@@ -406,13 +406,15 @@ function CalendarPage({ dailyNotes, onUpdateNote }) {
 
   return (
     <div className="calendar-page">
-      <div className="section-header" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <span>📅 Kalender Habit & Agenda</span>
-        <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
-          <button className="btn-icon" onClick={prevMonth}>◀</button>
-          <span style={{ minWidth: 120, textAlign: "center", fontWeight: 700 }}>{months[month]} {year}</span>
-          <button className="btn-icon" onClick={nextMonth}>▶</button>
+      <div className="topbar">
+        <div className="topbar-left">
+          <h2>{months[month]} {year}</h2>
+          <div style={{ display: "flex", gap: 10, alignItems: "center", marginTop: 4 }}>
+            <button className="top-btn" onClick={prevMonth}>◀</button>
+            <button className="top-btn" onClick={nextMonth}>▶</button>
+          </div>
         </div>
+        <button className="mobile-toggle" onClick={() => setSidebarOpen(true)}>☰</button>
       </div>
 
       <div className="calendar-grid">
@@ -567,6 +569,7 @@ export default function App() {
   const [pomodoroHabit, setPomodoroHabit] = useState(null);
   const [celebration, setCelebration] = useState(null);
   const [confettiTrigger, setConfettiTrigger] = useState(0);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const ai = useAICoach();
 
@@ -928,12 +931,15 @@ export default function App() {
             <h2>{getGreeting()}</h2>
             <div className="topbar-date">{formatDate()}</div>
           </div>
-          <div className="topbar-actions">
-            <button className="top-btn" onClick={toggleRestDay}>
-              {isRestDay ? "❌ Batalkan Rest" : "🛌 Rest Day"}
-            </button>
-            <button className="top-btn" onClick={() => setShowFreeze(true)}>🧊 {freezes}</button>
-            <button className="top-btn primary" onClick={() => setShowAddHabit(true)}>+ Tambah</button>
+          <div className="topbar-right">
+            <button className="mobile-toggle" onClick={() => setSidebarOpen(true)}>☰</button>
+            <div className="topbar-actions">
+              <button className="top-btn" onClick={toggleRestDay}>
+                {isRestDay ? "❌ Batalkan Rest" : "🛌 Rest Day"}
+              </button>
+              <button className="top-btn" onClick={() => setShowFreeze(true)}>🧊 {freezes}</button>
+              <button className="top-btn primary" onClick={() => setShowAddHabit(true)}>+ Tambah</button>
+            </div>
           </div>
         </div>
 
@@ -1320,7 +1326,8 @@ export default function App() {
       <CelebrationOverlay data={celebration} onDone={() => setCelebration(null)} />
 
       {/* SIDEBAR */}
-      <div className="sidebar">
+      {sidebarOpen && <div className="sidebar-overlay" onClick={() => setSidebarOpen(false)} />}
+      <div className={`sidebar ${sidebarOpen ? "mobile-open" : ""}`}>
         <div className="sidebar-logo" style={{ flexDirection: "column", alignItems: "flex-start", gap: 8 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
             <div className="logo-icon">🌊</div>
@@ -1399,7 +1406,7 @@ export default function App() {
         <div className="sidebar-section">
           <div className="sidebar-section-label">Menu</div>
           {navItems.filter(n => n.section === "menu").map(n => (
-            <div key={n.id} className={`nav-item ${page === n.id ? "active" : ""}`} onClick={() => setPage(n.id)}>
+            <div key={n.id} className={`nav-item ${page === n.id ? "active" : ""}`} onClick={() => { setPage(n.id); setSidebarOpen(false); }}>
               <span className="nav-icon">{n.icon}</span>{n.label}
             </div>
           ))}
@@ -1408,12 +1415,12 @@ export default function App() {
         <div className="sidebar-section">
           <div className="sidebar-section-label">Tools</div>
           {navItems.filter(n => n.section === "tools").map(n => (
-            <div key={n.id} className={`nav-item ${page === n.id ? "active" : ""}`} onClick={() => setPage(n.id)}>
+            <div key={n.id} className={`nav-item ${page === n.id ? "active" : ""}`} onClick={() => { setPage(n.id); setSidebarOpen(false); }}>
               <span className="nav-icon">{n.icon}</span>{n.label}
             </div>
           ))}
           <div className="nav-item" onClick={() => setShowWardrobe(true)}><span className="nav-icon">🎭</span>Pakaian Karakter</div>
-          <div className="nav-item" onClick={() => setShowFreeze(true)}><span className="nav-icon">🧊</span>Streak Freeze</div>
+          <div className="nav-item" onClick={() => { setShowFreeze(true); setSidebarOpen(false); }}><span className="nav-icon">🧊</span>Streak Freeze</div>
         </div>
 
         {/* Badge Strip */}
