@@ -143,8 +143,13 @@ function useAICoach() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: userMsg, context, history: history.slice(-10) })
       });
+
+      if (!res.ok) {
+        throw new Error(`Koneksi ke AI terputus (${res.status}).`);
+      }
+
       const data = await res.json();
-      const reply = data.reply || "Maaf, ada kendala koneksi. Coba lagi ya!";
+      const reply = data.reply || "Maaf, AI sedang istirahat. Coba lagi ya!";
 
       const elapsed = Date.now() - startTime;
       const delay = Math.max(800, 1500 - elapsed);

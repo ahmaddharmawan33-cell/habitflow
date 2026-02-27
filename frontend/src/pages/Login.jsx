@@ -53,7 +53,7 @@ export default function Login() {
                 <h1 style={{ fontSize: 32, fontWeight: 800, marginBottom: 12, letterSpacing: "-0.5px" }}>HabitFlow</h1>
                 <p style={{ color: "var(--text2)", marginBottom: 40, fontSize: 15, lineHeight: 1.6 }}>
                     Bangun disiplin dalam keindahan. <br />
-                    Mulai perjalananmu dengan Google.
+                    Mulai perjalananmu hanya dengan satu klik.
                 </p>
 
                 {error && (
@@ -91,7 +91,7 @@ export default function Login() {
                             cursor: "pointer"
                         }}>
                         <img src="https://www.gstatic.com/images/branding/product/1x/gsa_512dp.png" alt="" width="20" height="20" />
-                        {loading ? "Menghubungkan..." : "Login dengan Google"}
+                        {loading ? "Menghubungkan..." : "Masuk dengan Google"}
                     </button>
                 </div>
 
