@@ -62,4 +62,4 @@ function validateAnalyzePayload(req, res, next) {
   next();
 }
 
-module.exports = { validateAnalyzePayload };
+export { validateAnalyzePayload };

@@ -9,7 +9,7 @@
 //   2. Abuse would directly drain the API key
 // ─────────────────────────────────────────────────────────────────────────────
 
-const rateLimit = require("express-rate-limit");
+import rateLimit from "express-rate-limit";
 
 // General API limiter — applied to all /api/* routes
 const generalLimiter = rateLimit({
@@ -37,4 +37,4 @@ const aiLimiter = rateLimit({
   skip: () => process.env.NODE_ENV === "development",
 });
 
-module.exports = { generalLimiter, aiLimiter };
+export { generalLimiter, aiLimiter };

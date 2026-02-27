@@ -8,11 +8,11 @@
 //   This route acts as a secure proxy — the frontend never touches the key.
 // ─────────────────────────────────────────────────────────────────────────────
 
-const express = require("express");
-const axios = require("axios");
-const { GROQ_CONFIG, SYSTEM_PROMPT } = require("../config/groq");
-const { aiLimiter } = require("../middleware/rateLimiter");
-const { validateAnalyzePayload } = require("../middleware/validate");
+import express from "express";
+import axios from "axios";
+import { GROQ_CONFIG, SYSTEM_PROMPT } from "../config/groq.js";
+import { aiLimiter } from "../middleware/rateLimiter.js";
+import { validateAnalyzePayload } from "../middleware/validate.js";
 
 const router = express.Router();
 
@@ -259,4 +259,4 @@ ${contextLine}
 PENTING: Jawab pertanyaan user di bagian 'encouragement' dengan nada yang natural. Variasikan jawabanmu, jangan selalu menggunakan pola kalimat yang sama. Jika tidak ada pertanyaan, berikan refleksi atau motivasi berbasis data di atas.`;
 }
 
-module.exports = router;
+export default router;

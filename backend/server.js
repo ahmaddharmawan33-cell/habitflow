@@ -15,14 +15,14 @@
 
 require("dotenv").config();
 
-const express = require("express");
-const cors = require("cors");
-const helmet = require("helmet");
-const morgan = require("morgan");
+import express from "express";
+import cors from "cors";
+import helmet from "helmet";
+import morgan from "morgan";
 
-const { generalLimiter } = require("./middleware/rateLimiter");
-const aiRouter = require("./routes/ai");
-const healthRouter = require("./routes/health");
+import { generalLimiter } from "./middleware/rateLimiter.js";
+import aiRouter from "./routes/ai.js";
+import healthRouter from "./routes/health.js";
 
 // ── Validate critical env vars at startup ───────────────────────────────────
 if (!process.env.GROQ_API_KEY) {
@@ -124,4 +124,4 @@ app.listen(PORT, () => {
   `);
 });
 
-module.exports = app; // for testing
+export default app; // for testing

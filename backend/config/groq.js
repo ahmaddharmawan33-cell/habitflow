@@ -38,4 +38,4 @@ Aturan Ketat:
 - Bagian 'encouragement' HARUS terasa seperti chat manusia asli (Bestie).
 - Jika user bertanya hal yang sama berulang kali, berikan variasi jawaban agar tidak membosankan.`;
 
-module.exports = { GROQ_CONFIG, SYSTEM_PROMPT };
+export { GROQ_CONFIG, SYSTEM_PROMPT };

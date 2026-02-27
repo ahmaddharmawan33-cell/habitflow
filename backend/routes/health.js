@@ -4,7 +4,7 @@
 // Used by Railway for health checks and by the frontend to verify backend is up.
 // ─────────────────────────────────────────────────────────────────────────────
 
-const express = require("express");
+import express from "express";
 const router = express.Router();
 
 router.get("/", (req, res) => {
@@ -17,4 +17,4 @@ router.get("/", (req, res) => {
   });
 });
 
-module.exports = router;
+export default router;
