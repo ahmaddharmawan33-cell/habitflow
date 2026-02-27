@@ -137,7 +137,8 @@ function useAICoach() {
     const startTime = Date.now();
 
     try {
-      const res = await fetch("/api/ai/chat", {
+      const apiUrl = import.meta.env.VITE_API_URL || "";
+      const res = await fetch(`${apiUrl}/api/ai/chat`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: userMsg, context, history: history.slice(-10) })

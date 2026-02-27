@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { supabase } from "../lib/supabase";
 
-export default function Login({ onGuest }) {
+export default function Login() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
@@ -12,7 +12,7 @@ export default function Login({ onGuest }) {
             const { error } = await supabase.auth.signInWithOAuth({
                 provider: "google",
                 options: {
-                    redirectTo: window.location.origin,
+                    redirectTo: `${window.location.origin}/dashboard`,
                 },
             });
             if (error) throw error;
@@ -53,7 +53,7 @@ export default function Login({ onGuest }) {
                 <h1 style={{ fontSize: 32, fontWeight: 800, marginBottom: 12, letterSpacing: "-0.5px" }}>HabitFlow</h1>
                 <p style={{ color: "var(--text2)", marginBottom: 40, fontSize: 15, lineHeight: 1.6 }}>
                     Bangun disiplin dalam keindahan. <br />
-                    Mulai perjalananmu hanya dengan satu klik.
+                    Mulai perjalananmu dengan Google.
                 </p>
 
                 {error && (
@@ -87,33 +87,16 @@ export default function Login({ onGuest }) {
                             background: "white",
                             color: "#000",
                             border: "none",
-                            transition: "transform 0.2s",
+                            transition: "all 0.2s",
                             cursor: "pointer"
                         }}>
                         <img src="https://www.gstatic.com/images/branding/product/1x/gsa_512dp.png" alt="" width="20" height="20" />
-                        {loading ? "Menghubungkan..." : "Masuk dengan Google"}
-                    </button>
-
-                    <button className="btn-secondary-glass"
-                        onClick={onGuest}
-                        style={{
-                            width: "100%",
-                            padding: "16px",
-                            fontSize: "15px",
-                            fontWeight: "600",
-                            borderRadius: "16px",
-                            background: "rgba(255,255,255,0.05)",
-                            color: "var(--text)",
-                            border: "1px solid var(--border)",
-                            cursor: "pointer",
-                            transition: "all 0.2s"
-                        }}>
-                        Coba Dulu (Offline Mode)
+                        {loading ? "Menghubungkan..." : "Login dengan Google"}
                     </button>
                 </div>
 
                 <p style={{ marginTop: 32, fontSize: 12, color: "var(--text2)", opacity: 0.7 }}>
-                    Dengan melanjutkan, kamu setuju dengan Ketentuan Layanan kami.
+                    Dengan melanjutkan, Anda menyetujui Ketentuan Layanan kami.
                 </p>
             </div>
 
@@ -122,9 +105,9 @@ export default function Login({ onGuest }) {
                     from { opacity: 0; transform: translateY(20px); }
                     to { opacity: 1; transform: translateY(0); }
                 }
-                .btn-secondary-glass:hover {
-                    background: rgba(255,255,255,0.1) !important;
-                    border-color: rgba(255,255,255,0.2) !important;
+                .btn-primary:hover {
+                    box-shadow: 0 8px 24px rgba(255, 255, 255, 0.1) !important;
+                    transform: translateY(-2px);
                 }
             `}</style>
         </div>
