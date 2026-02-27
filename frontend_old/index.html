@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="HabitFlow — AI-powered habit tracker" />
+  <title>HabitFlow — AI Habit Tracker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="./css/app.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+</head>
+
+<body>
+
+  <!-- ═══ LOGIN SCREEN ═══ -->
+  <div data-screen="login">
+    <div class="login-card">
+      <div class="login-logo" aria-hidden="true">🌊</div>
+      <h1 class="login-title">HabitFlow</h1>
+      <p class="login-desc">Bangun kebiasaan baik setiap hari.<br>Progress tersimpan otomatis di cloud ☁️</p>
+
+      <button class="google-btn" id="loginGoogleBtn">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path
+            d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+            fill="#4285F4" />
+          <path
+            d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+            fill="#34A853" />
+          <path
+            d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
+            fill="#FBBC05" />
+          <path
+            d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
+            fill="#EA4335" />
+        </svg>
+        Masuk dengan Google
+      </button>
+
+      <div class="divider">atau</div>
+      <button class="guest-btn" id="loginGuestBtn">Lanjutkan tanpa login (data lokal)</button>
+    </div>
+  </div>
+
+  <!-- ═══ APP SCREEN ═══ -->
+  <div data-screen="app">
+
+    <header class="mobile-header" role="banner">
+      <div class="mobile-logo">HabitFlow</div>
+      <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </header>
+
+    <div class="sidebar-backdrop" id="sidebarBackdrop" aria-hidden="true"></div>
+
+    <div class="app-shell">
+
+      <!-- SIDEBAR -->
+      <aside class="sidebar" id="sidebar" role="complementary" aria-label="Navigation">
+
+        <div class="sidebar-top">
+          <div class="logo-wrap">
+            <div class="logo-icon" aria-hidden="true">🌊</div>
+            <div class="logo-text">HabitFlow</div>
+          </div>
+          <div class="user-pill">
+            <div class="user-avatar" id="userAvatar" aria-hidden="true">👤</div>
+            <div class="user-name" id="userName">Guest</div>
+            <div class="user-badge" id="userBadge">LOCAL</div>
+          </div>
+
+          <!-- XP & Level Card -->
+          <div class="sidebar-xp-card">
+            <div class="xp-char" id="xpChar">🐣</div>
+            <div class="xp-details">
+              <div class="xp-level">Level <span id="userLevel">1</span></div>
+              <div class="xp-bar-wrap">
+                <div class="xp-bar-fill" id="xpFill" style="width: 0%"></div>
+              </div>
+              <div class="xp-label"><span id="userXP">0</span> / <span id="nextLevelXP">100</span> XP</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- KPI Stats -->
+        <div class="sidebar-kpi">
+          <div class="kpi-streak" id="streakCard" aria-label="Current streak">
+            <div class="kpi-label">🔥 Streak</div>
+            <div class="kpi-value" id="sidebarStreak">0</div>
+            <div class="kpi-sub">hari berturut-turut</div>
+          </div>
+          <div class="kpi-score" aria-label="Discipline score">
+            <div class="kpi-score-row">
+              <div class="kpi-label">⚡ Skor Disiplin</div>
+              <div class="kpi-score-num" id="disciplineScore">0</div>
+            </div>
+            <div class="score-track">
+              <div class="score-fill" id="scoreFill" style="width:0%"></div>
+            </div>
+            <div class="kpi-score-grade" id="scoreGrade" style="color:var(--text-3)">Mulai tracking!</div>
+          </div>
+        </div>
+
+        <nav class="sidebar-nav" aria-label="Main menu">
+          <div class="nav-section">Menu</div>
+          <div class="nav-item active" data-page="today" tabindex="0" role="button"><span class="nav-icon"
+              aria-hidden="true">📋</span>Hari Ini</div>
+          <div class="nav-item" data-page="progress" tabindex="0" role="button"><span class="nav-icon"
+              aria-hidden="true">📊</span>Progress</div>
+          <div class="nav-item" data-page="all-habits" tabindex="0" role="button"><span class="nav-icon"
+              aria-hidden="true">🗂️</span>Semua Habit</div>
+          <div class="nav-section" style="margin-top:10px">Tools</div>
+          <div class="nav-item" data-page="achievements" tabindex="0" role="button"><span class="nav-icon"
+              aria-hidden="true">🏆</span>Pencapaian</div>
+        </nav>
+
+        <div class="sidebar-footer">
+          <div class="theme-row">
+            <span>🌙 Dark Mode</span>
+            <label class="toggle-switch" aria-label="Toggle dark mode">
+              <input type="checkbox" id="themeToggle" />
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+          <button class="logout-btn" id="logoutBtn">↩️ Keluar / Ganti Akun</button>
+          <div class="credit">Crafted by <span>Mawan</span> ✦</div>
+        </div>
+      </aside>
+
+      <!-- MAIN -->
+      <main class="main" id="mainContent">
+
+        <div class="page-header">
+          <div class="page-date" id="todayDate" aria-live="polite"></div>
+          <h1 class="page-title" id="greetingTitle">Halo! 👋</h1>
+          <p class="page-subtitle">Lacak kebiasaanmu, bangun masa depanmu.</p>
+        </div>
+
+        <div class="ai-alert" id="aiAlert" role="alert" aria-live="polite">
+          <div class="ai-alert-head">⚠️ Perhatian</div>
+          <div class="ai-alert-body" id="aiAlertBody"></div>
+        </div>
+
+        <section class="ai-card" aria-label="AI Coach">
+          <div class="ai-card-top">
+            <div class="ai-badge">
+              <div class="ai-dot" aria-hidden="true"></div>✦ AI Coach
+            </div>
+            <div class="ai-btns">
+              <button class="ai-eval-btn" id="aiDailyBtn" aria-label="Daily evaluation">🌙 Harian</button>
+              <button class="ai-analyze-btn" id="aiAnalyzeBtn" aria-label="Analyze week">✦ Mingguan</button>
+            </div>
+          </div>
+          <div class="ai-message" id="aiMessage" aria-live="polite">Pencet 'Analisis Minggu' atau tulis sesuatu di bawah
+            untuk mulai ngobrol! ✨</div>
+          <div class="ai-input-row" style="margin-top:16px">
+            <div class="chat-input-wrap">
+              <input type="text" id="aiChatInputMain" placeholder="Ketik pesan..." autocomplete="off" />
+              <button id="aiChatSendBtnMain">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="22" y1="2" x2="11" y2="13"></line>
+                  <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <div class="section-header">
+          <div class="section-label">Minggu Ini · Sen → Min</div>
+        </div>
+        <div class="week-grid" id="weekGrid" role="region" aria-label="Weekly progress"></div>
+
+        <div class="progress-wrap">
+          <div class="progress-head">
+            <div class="progress-title">Penyelesaian Hari Ini</div>
+            <div class="progress-pct" id="todayPct" aria-live="polite">0%</div>
+          </div>
+          <div class="progress-track" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+            <div class="progress-fill" id="progressFill" style="width:0%"></div>
+          </div>
+        </div>
+
+        <!-- AI COACH CHAT MODAL -->
+        <div class="modal-overlay" id="aiCoachModal" role="dialog" aria-modal="true">
+          <div class="modal chat-modal">
+            <div class="chat-header">
+              <div class="chat-header-left">
+                <div class="ai-logo-small">✦</div>
+                <div>
+                  <h2 class="chat-title">AI Coach</h2>
+                  <div class="chat-status">
+                    <div class="ai-dot"></div>Online
+                  </div>
+                </div>
+              </div>
+              <div class="chat-header-right">
+                <button class="chat-clear-btn" id="clearChatBtn" title="Hapus Chat">🗑️</button>
+                <button class="chat-close"
+                  onclick="document.getElementById('aiCoachModal').classList.remove('open')">✕</button>
+              </div>
+            </div>
+
+            <div class="chat-body" id="chatBody">
+              <!-- Messages will appear here -->
+              <div class="chat-welcome">
+                <div class="ai-logo-large">✦</div>
+                <h3>Halo! Aku AI Coach-mu.</h3>
+                <p>Tanya apa saja tentang habit-mu atau minta tips konsistensi.</p>
+              </div>
+            </div>
+
+            <div class="chat-footer">
+              <div class="typing-indicator" id="typingIndicator">
+                <span></span><span></span><span></span>
+              </div>
+              <div class="suggested-questions" id="suggestedQuestions">
+                <!-- Suggested buttons will be injected -->
+              </div>
+              <div class="chat-input-wrap">
+                <input type="text" id="aiChatInputModal" placeholder="Ketik pesan..." autocomplete="off" />
+                <button id="aiChatSendBtn">
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="22" y1="2" x2="11" y2="13"></line>
+                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="habits-toolbar">
+          <button class="add-habit-btn" id="addHabitBtn">＋ Tambah Habit</button>
+          <div class="section-label">Daftar Habit</div>
+        </div>
+        <div class="habits-list" id="habitsList" role="list" aria-label="Habit list"></div>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- MODAL -->
+  <div class="modal-overlay" id="habitModal" role="dialog" aria-modal="true" aria-labelledby="habitModalTitle">
+    <div class="modal">
+      <h2 class="modal-title" id="habitModalTitle">Habit Baru</h2>
+      <div class="form-group">
+        <label class="form-label" for="habitNameInput">Nama Habit</label>
+        <input class="form-input" type="text" id="habitNameInput" placeholder="Contoh: Baca 30 menit…" maxlength="60"
+          autocomplete="off" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Pilih Emoji</label>
+        <div class="emoji-grid" id="emojiGrid" role="group" aria-label="Emoji selector"></div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost"
+          onclick="document.getElementById('habitModal').classList.remove('open')">Batal</button>
+        <button class="btn btn-primary" id="saveHabitBtn">Tambah Habit</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-wrap" id="toastWrap" aria-live="polite" aria-atomic="true"></div>
+
+  <script type="module" src="./js/app.js"></script>
+</body>
+
+</html>
