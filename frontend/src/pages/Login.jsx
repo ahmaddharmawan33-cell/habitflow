@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { supabase } from "../lib/supabase";
 
-export default function Login() {
+export default function Login({ onGuest }) {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
@@ -93,6 +93,21 @@ export default function Login() {
                         <img src="https://www.gstatic.com/images/branding/product/1x/gsa_512dp.png" alt="" width="20" height="20" />
                         {loading ? "Menghubungkan..." : "Masuk dengan Google"}
                     </button>
+
+                    <button className="btn btn-ghost"
+                        onClick={onGuest}
+                        style={{
+                            width: "100%",
+                            padding: "12px",
+                            fontSize: "14px",
+                            color: "var(--text2)",
+                            background: "transparent",
+                            border: "none",
+                            cursor: "pointer",
+                            opacity: 0.8
+                        }}>
+                        Lanjutkan sebagai Tamu (Mode Lokal)
+                    </button>
                 </div>
 
                 <p style={{ marginTop: 32, fontSize: 12, color: "var(--text2)", opacity: 0.7 }}>
@@ -108,6 +123,10 @@ export default function Login() {
                 .btn-primary:hover {
                     box-shadow: 0 8px 24px rgba(255, 255, 255, 0.1) !important;
                     transform: translateY(-2px);
+                }
+                .btn-ghost:hover {
+                    opacity: 1 !important;
+                    color: white !important;
                 }
             `}</style>
         </div>
